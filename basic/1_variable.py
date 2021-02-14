@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 '''
 문단주석
 '''
@@ -13,7 +15,7 @@ print("stock_earning : %s" % stock_earning)
 print(type(stock_earning))
 
 # str 은 문자
-stock_name = "문자입니다."
+stock_name = "aaa"
 print("stock_name : %s" % stock_name)
 print(type(stock_name))
 
