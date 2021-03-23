@@ -28,22 +28,31 @@ print('The entered parameter value is : ', input_sys_value)
 
 if input_sys_value == "gold":
     input_url = "http://goldgold.co.kr/charts/1_price1.php"
-    input_jewelry_type = 'C002001'
-    input_gold_purity = 'C003001'
+    #input_jewelry_type = 'C002001'
+    #input_gold_purity = 'C003001'
+    input_jewelry_type = 'GOLD'
+    input_gold_purity = '24K'
 elif input_sys_value == "platinum":
     input_url = "http://goldgold.co.kr/charts/1_price2.php"
-    input_jewelry_type = 'C002002'
+    #input_jewelry_type = 'C002002'
+    #input_gold_purity = '' # 순도없음
+    input_jewelry_type = 'PLATINUM'
     input_gold_purity = '' # 순도없음
 elif input_sys_value == "silver":
     input_url = "http://goldgold.co.kr/charts/1_price3.php"
-    input_jewelry_type = 'C002003'
+    #input_jewelry_type = 'C002003'
+    #input_gold_purity = '' # 순도없음
+    input_jewelry_type = 'SILVER'
     input_gold_purity = '' # 순도없음
 else:
     quit()
 
 
-input_gold_currency = 'C001001'
-input_country_code = 'C900029'
+#input_gold_currency = 'C001001'
+#input_country_code = 'C900029'
+input_gold_currency = 'KRW'
+input_country_code = 'KR'
+
 
 
 html = urlopen(input_url)
@@ -95,24 +104,25 @@ cur = conn.cursor() # 커서를 생성한다
 
 # data 입력
 '''
-jewelry_type (C002001:금)
+jewelry_type (GOLD:금)
 gold_date 
-gold_purity (C003001:24K)
+gold_purity (24K:24K)
 gold_price_type B
 gold_price 살때가격
-country_code 029
-gold_currency (C001001:원화)
+country_code (KR:한국)
+gold_currency (KRW:원화)
 '''
 
 
 print_code = ''
 print_code_value = ''
+print_code_key = ''
 print_use_yn = ''
 print_del_yn = ''
 
 
 ### print value
-query = "select code, code_value, use_yn, del_yn from tbl_common_code tcc where code = '" + input_gold_currency + "'"
+query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_gold_currency + "'"
 cur.execute(query)
 
 tbl_common_code_records = cur.fetchall()
@@ -120,17 +130,19 @@ tbl_common_code_records = cur.fetchall()
 for row in tbl_common_code_records:
     print_code = row[0]
     print_code_value = row[1]
-    print_use_yn = row[2]
-    print_del_yn = row[3]
+    print_code_key = row[2]
+    print_use_yn = row[3]
+    print_del_yn = row[4]
 
 print('[gold_currency] >> ' , print_code_value , '(' , print_code , ')')
+print('[gold_currency] >> ' , 'code_key : ', print_code_key)
 print('[gold_currency] >> ' , 'use_yn : ', print_use_yn)
 print('[gold_currency] >> ' , 'del_yn : ', print_del_yn)
 print('')
 
 
 
-query = "select code, code_value, use_yn, del_yn from tbl_common_code tcc where code = '" + input_jewelry_type + "'"
+query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_jewelry_type + "'"
 cur.execute(query)
 
 tbl_common_code_records = cur.fetchall()
@@ -138,10 +150,12 @@ tbl_common_code_records = cur.fetchall()
 for row in tbl_common_code_records:
     print_code = row[0]
     print_code_value = row[1]
-    print_use_yn = row[2]
-    print_del_yn = row[3]
+    print_code_key = row[2]
+    print_use_yn = row[3]
+    print_del_yn = row[4]
 
 print('[jewelry_type] >> ' , print_code_value , '(' , print_code , ')')
+print('[jewelry_type] >> ' , 'code_key : ', print_code_key)
 print('[jewelry_type] >> ' , 'use_yn : ', print_use_yn)
 print('[jewelry_type] >> ' , 'del_yn : ', print_del_yn)
 print('')
@@ -149,7 +163,7 @@ print('')
 
 
 if input_sys_value == "gold":
-    query = "select code, code_value, use_yn, del_yn from tbl_common_code tcc where code = '" + input_gold_purity + "'"
+    query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_gold_purity + "'"
     cur.execute(query)
 
     tbl_common_code_records = cur.fetchall()
@@ -157,17 +171,19 @@ if input_sys_value == "gold":
     for row in tbl_common_code_records:
         print_code = row[0]
         print_code_value = row[1]
-        print_use_yn = row[2]
-        print_del_yn = row[3]
+        print_code_key = row[2]
+        print_use_yn = row[3]
+        print_del_yn = row[4]
 
     print('[gold_purity] >> ' , print_code_value , '(' , print_code , ')')
+    print('[gold_purity] >> ' , 'code_key : ', print_code_key)
     print('[gold_purity] >> ' , 'use_yn : ', print_use_yn)
     print('[gold_purity] >> ' , 'del_yn : ', print_del_yn)
     print('')
 
 
 
-query = "select code, code_value, use_yn, del_yn from tbl_common_code tcc where code = '" + input_country_code + "'"
+query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_country_code + "'"
 cur.execute(query)
 
 tbl_common_code_records = cur.fetchall()
@@ -175,10 +191,12 @@ tbl_common_code_records = cur.fetchall()
 for row in tbl_common_code_records:
     print_code = row[0]
     print_code_value = row[1]
-    print_use_yn = row[2]
-    print_del_yn = row[3]
+    print_code_key = row[2]
+    print_use_yn = row[3]
+    print_del_yn = row[4]
 
 print('[country_code] >> ' , print_code_value , '(' , print_code , ')')
+print('[country_code] >> ' , 'code_key : ', print_code_key)
 print('[country_code] >> ' , 'use_yn : ', print_use_yn)
 print('[country_code] >> ' , 'del_yn : ', print_del_yn)
 print('')
