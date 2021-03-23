@@ -8,6 +8,8 @@ pip3 install psycopg2
 # py C:\Users\swjung\git_front_goldnawa\goCrawling\crawling\gold_nawa_crawling.py platinum
 # py C:\Users\swjung\git_front_goldnawa\goCrawling\crawling\gold_nawa_crawling.py silver
 
+# py C:\Users\swjung\git_front_goldnawa\goCrawling\crawling\gold_nawa_crawling_imsi_push_data.py gold
+
 
 import psycopg2 # driver 임포트
 import sys # 파이썬 실행시 뒤에 파라미터 붙이기 위해 추가
