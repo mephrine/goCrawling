@@ -82,12 +82,14 @@ for index, text_tr in enumerate(tbl_buy):
         input_today = text_tr('td')[7].text    # 오늘날짜
     if index == 9:
         input_buy_price = text_tr('td')[7].text    # 살때가격
+        input_buy_price = input_buy_price.replace(",","")
 
 
 # 팔때
 for index, text_tr in enumerate(tbl_sell):
     if index == 5:
         input_sell_price = text_tr('td')[7].text    # 팔때가격
+        input_sell_price = input_sell_price.replace(",","")
     #if index == 9:
         #print(text_tr('td')[7].text)    # 18k가격
     #if index == 13:
@@ -114,15 +116,30 @@ gold_currency (KRW:원화)
 '''
 
 
+
+# Data Validation
+# 이미 입력된 날짜의 데이터가 있으면 동작하지 않음
+query = "select COUNT(*) as cnt from tbl_gold_price tgp where jewelry_type = '" + input_jewelry_type + "' and gold_date = TO_DATE('" + input_today + "','yyyy-mm-dd')"
+cur.execute(query)
+
+data_records = cur.fetchall()
+
+for row in data_records :
+    cnt = row[0]
+    if cnt > 0 :
+        print('이미 데이터가 존재합니다')
+        quit()
+
+
+
 print_code = ''
 print_code_value = ''
 print_code_key = ''
 print_use_yn = ''
 print_del_yn = ''
 
-
 ### print value
-query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_gold_currency + "'"
+query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code_key = '" + input_gold_currency + "'"
 cur.execute(query)
 
 tbl_common_code_records = cur.fetchall()
@@ -142,7 +159,7 @@ print('')
 
 
 
-query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_jewelry_type + "'"
+query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code_key = '" + input_jewelry_type + "'"
 cur.execute(query)
 
 tbl_common_code_records = cur.fetchall()
@@ -163,7 +180,7 @@ print('')
 
 
 if input_sys_value == "gold":
-    query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_gold_purity + "'"
+    query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code_key = '" + input_gold_purity + "'"
     cur.execute(query)
 
     tbl_common_code_records = cur.fetchall()
@@ -183,7 +200,7 @@ if input_sys_value == "gold":
 
 
 
-query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code = '" + input_country_code + "'"
+query = "select code, code_value, code_key, use_yn, del_yn from tbl_common_code tcc where code_key = '" + input_country_code + "'"
 cur.execute(query)
 
 tbl_common_code_records = cur.fetchall()
